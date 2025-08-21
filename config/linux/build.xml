@@ -145,14 +145,14 @@
             <mkdir dir="${lib.arch}" unless:set="lib-uptodate"/>
             <beforeLink unless:set="lib-uptodate"/>
             <apply executable="${gcc}" failonerror="true" parallel="true" taskname="Linker" unless:set="lib-uptodate">
-                <srcfile/>
+              <srcfile/>
                 <arg value="-shared"/>
                 <arg value="-m64" if:set="build.arch.x64"/>
                 <arg value="-m32" if:set="build.arch.x86"/>
-                
+
                 <arg line="-l:libc++abi.a -l:libc++_static.a" if:set="force-cpp-static-linking"/>
                 <arg line="-z noexecstack"/>
-                <arg line="-O3 -flto=auto -fPIC -pthread -o ${lib.arch}/lib${name}.so"/>
+                <arg line="-O3 -flto -fPIC -pthread -o ${lib.arch}/lib${name}.so"/>
 
                 <arg line="-Wl,--no-undefined"/>
                 <arg line="-Wl,--version-script,${version.script}"/>
@@ -179,24 +179,26 @@
     <target name="compile-native-platform">
         <local name="gcc.version.string"/>
         <exec executable="bash" outputproperty="gcc.version.string" logError="true" failonerror="true">
-            <arg line="-o pipefail -c"/>
-            <arg value="${gcc.prefix}clang --version | grep ^.*clang"/>
+          <arg line="-o pipefail -c"/>
+          <arg value="${gcc.prefix}clang --version | grep ^.*clang"/>
         </exec>
         <echo message='${gcc.prefix}clang --version: "${gcc.version.string}"' taskname="Compiler"/>
         
         <parallel threadsPerProcessor="2">
 
-        <!-- CORE -->
-        <build module="core" flags="-Werror -Wfatal-errors -Wall -Wextra -pedantic -Wno-zero-length-array -Wno-gnu-statement-expression-from-macro-expansion">
-          <beforeCompile>
-                <compile>
-                    <arg value="-I${src.main.rel}/${platform}/liburing"/>
-                    <arg value="-I${src.main.rel}/${platform}/liburing/include"/>
-                    <arg value="-DCONFIG_HAVE_MEMFD_CREATE"/>
-                    <fileset dir="." includes="${src.main}/${platform}/liburing/*.c"/>
-                </compile>
-            </beforeCompile>
-            <source>
+          <!-- CORE -->
+      
+          <build module="core" flags="-Werror -Wfatal-errors -Wall -Wextra -pedantic -Wno-zero-length-array -Wno-gnu-statement-expression">
+            <beforeCompile>
+              <compile>
+
+                <arg value="-I${src.main.rel}/${platform}/liburing"/>
+                <arg value="-I${src.main.rel}/${platform}/liburing/include"/>
+                <arg value="-DCONFIG_HAVE_MEMFD_CREATE"/>
+                <fileset dir="." includes="${src.main}/${platform}/liburing/*.c"/>
+              </compile>
+          </beforeCompile>
+          <source>
                 <arg value="-I${src.main.rel}/libffi"/>
                 <arg value="-I${src.main.rel}/libffi/aarch64" if:set="build.arch.arm64"/>
                 <arg value="-I${src.main.rel}/libffi/arm" if:set="build.arch.arm32"/>
