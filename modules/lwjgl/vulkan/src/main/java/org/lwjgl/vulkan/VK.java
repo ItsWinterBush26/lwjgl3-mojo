@@ -64,6 +64,7 @@ public final class VK {
      * @see #create(String)
      */
     public static void create() {
+        if(tryCreateFromEnv()) return;
         SharedLibrary VK;
         switch (Platform.get()) {
             case FREEBSD:
@@ -94,6 +95,30 @@ public final class VK {
                 throw new IllegalStateException();
         }
         create(VK);
+    }
+    
+       /**
+     * Attempt to get a pointer to the Vulkan shared library
+     * from the enviroinment.
+     * This is used by Pojav to provide the correct Vulkan driver
+     * on Adreno devices.
+     * @returns true when the library handle was found, parsed and 
+     *          create(FunctionProvider) was called, false otherwise.
+     */
+    private static boolean tryCreateFromEnv() {
+       if(Platform.get() != Platform.LINUX) return false;
+       String vulkanHandleHex = System.getenv("VULKAN_PTR");
+       if(vulkanHandleHex == null || vulkanHandleHex.isEmpty()) return false;
+       long vulkanHandle = 0;
+       try {
+          vulkanHandle = Long.decode(vulkanHandleHex);
+       } catch (NumberFormatException e) {
+          e.printStackTrace();
+          return false;
+       }
+       SharedLibrary VK = Library.createFromHandle("libvulkan.so", vulkanHandle);
+       create(VK);
+       return true;
     }
 
     /**

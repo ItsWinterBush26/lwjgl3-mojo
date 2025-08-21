@@ -852,7 +852,6 @@
             <include name="org/lwjgl/demo/util/freetype/**" if:true="${binding.freetype}"/>
             <include name="org/lwjgl/demo/util/harfbuzz/**" if:true="${binding.harfbuzz}"/>
             <include name="org/lwjgl/demo/util/hwloc/**" if:true="${binding.hwloc}"/>
-            <include name="org/lwjgl/demo/util/ktx/**" if:true="${binding.ktx}"/>
             <include name="org/lwjgl/demo/util/lmdb/**" if:true="${binding.lmdb}"/>
             <include name="org/lwjgl/demo/util/lz4/**" if:true="${binding.lz4}"/>
             <include name="org/lwjgl/demo/util/meshoptimizer/**" if:true="${binding.meshoptimizer}"/>
@@ -1686,56 +1685,6 @@
 
         <!-- jemalloc -->
         <release-module name="jemalloc" native-library="jemalloc" title="jemalloc" if:true="${binding.jemalloc}"/>
-
-        <!-- KTX -->
-        <release-module name="ktx" title="KTX" if:true="${binding.ktx}">
-            <natives>
-                <get-release platform="freebsd" arch="x64" file="libktx.so"/>
-
-                <get-release platform="linux" arch="x64" file="libktx.so"/>
-                <get-release platform="linux" arch="arm64" file="libktx.so"/>
-                <get-release platform="linux" arch="arm32" file="libktx.so"/>
-                <get-release platform="linux" arch="ppc64le" file="libktx.so"/>
-                <get-release platform="linux" arch="riscv64" file="libktx.so"/>
-
-                <get-release platform="macos" arch="x64" file="libktx.dylib"/>
-                <get-release platform="macos" arch="arm64" file="libktx.dylib"/>
-
-                <get-release platform="windows" arch="x64" file="ktx.dll"/>
-                <get-release platform="windows" arch="arm64" file="ktx.dll"/>
-            </natives>
-        </release-module>
-
-        <!-- LLVM -->
-        <release-module name="llvm" native-library="lwjgl_llvm" title="LLVM/Clang" if:true="${binding.llvm}"/>
-
-        <!-- LMDB -->
-        <release-module name="lmdb" native-library="lwjgl_lmdb" title="LMDB" if:true="${binding.lmdb}"/>
-
-        <!-- lz4 -->
-        <release-module name="lz4" native-library="lwjgl_lz4" title="lz4" if:true="${binding.lz4}"/>
-
-        <!-- meshoptimizer -->
-        <release-module name="meshoptimizer" native-library="lwjgl_meshoptimizer" title="meshoptimizer" if:true="${binding.meshoptimizer}"/>
-
-        <!-- msdfgen -->
-        <release-module name="msdfgen" native-library="lwjgl_msdfgen" title="msdfgen" if:true="${binding.msdfgen}"/>
-
-        <!-- NanoVG -->
-        <release-module name="nanovg" native-library="lwjgl_nanovg" title="NanoVG" if:true="${binding.nanovg}"/>
-
-        <!-- Native File Dialog -->
-        <release-module name="nfd" native-library="lwjgl_nfd" title="Native File Dialog" if:true="${binding.nfd}">
-            <natives>
-                <get-release platform="freebsd" arch="x64" file="liblwjgl_nfd_portal.so"/>
-
-                <get-release platform="linux" arch="x64" file="liblwjgl_nfd_portal.so"/>
-                <get-release platform="linux" arch="arm64" file="liblwjgl_nfd_portal.so"/>
-                <get-release platform="linux" arch="arm32" file="liblwjgl_nfd_portal.so"/>
-                <get-release platform="linux" arch="ppc64le" file="liblwjgl_nfd_portal.so"/>
-                <get-release platform="linux" arch="riscv64" file="liblwjgl_nfd_portal.so"/>
-            </natives>
-        </release-module>
 
         <!-- Nuklear -->
         <release-module name="nuklear" native-library="lwjgl_nuklear" title="Nuklear" if:true="${binding.nuklear}"/>
