@@ -33,6 +33,7 @@
         <attribute name="lang" default="c"/>
         <attribute name="gcc.exec" default="${gcc.prefix}clang"/>
         <attribute name="gpp.exec" default="${gcc.prefix}clang++"/>
+        <attribute name="lto" default="-flto"/>
         <attribute name="flags" default=""/>
         <attribute name="simple" default="false"/>
         <attribute name="relative" default="true"/>
@@ -414,7 +415,7 @@
         <build module="tinyfd" simple="true" if:true="${binding.tinyfd}">
             <beforeCompile>
                 <compile>
-                    <arg value="-I${src.main.rel}"/>
+                    arg value="-I${src.main.rel}"/>
                     <fileset dir="." includes="${src.main}/*.c"/>
                 </compile>
             </beforeCompile>
