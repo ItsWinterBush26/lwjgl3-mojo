@@ -144,7 +144,14 @@ This script is included in /build.xml and /config/update-dependencies.xml.
     <local name="java.version.regex"/>
     <property name="java.version.regex" value="((\.0)*\.[1-9][0-9]*)*(-[a-zA-Z0-9]+)?"/> <!-- without the major number -->
 
-    <condition property="jdk21">                             <matches string="${java.version}" pattern="^21${java.version.regex}$"/>     </condition>
+    <condition property="jdk28">                             <matches string="${java.version}" pattern="^21${java.version.regex}$"/>     </condition>
+    <condition property="jdk27"><or><isset property="jdk28"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
+    <condition property="jdk26"><or><isset property="jdk27"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
+    <condition property="jdk25"><or><isset property="jdk26"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
+    <condition property="jdk24"><or><isset property="jdk25"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
+    <condition property="jdk23"><or><isset property="jdk24"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
+    <condition property="jdk22"><or><isset property="jdk23"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
+    <condition property="jdk21"><or><isset property="jdk22"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
     <condition property="jdk20"><or><isset property="jdk21"/><matches string="${java.version}" pattern="^20${java.version.regex}$"/></or></condition>
     <condition property="jdk19"><or><isset property="jdk20"/><matches string="${java.version}" pattern="^19${java.version.regex}$"/></or></condition>
     <condition property="jdk18"><or><isset property="jdk19"/><matches string="${java.version}" pattern="^18${java.version.regex}$"/></or></condition>
